@@ -1,32 +1,23 @@
 function refineText(source, options) {
-  return [
-    normalizeWhitespaces,
-    compactWhitespaces,
-    maskBannedWords,
-    trimWhitespaces,
-  ].reduce((value, filter) => filter(value, options), source);
+  return [nomalizeWhiteSpaces, compactWhiteSpaces, maskBannedWords]
+    .reduce((value, filter) => filter(value, options), source);
 }
 
-function normalizeWhitespaces(value) {
-  return value.replace("\t", " ");
+function maskBannedWords(source, options) {
+  return options ? options.bannedWords.reduce(maskBannedWord, source) : source;
 }
 
-function compactWhitespaces(value) {
-  return value.indexOf("  ") < 0
-    ? value
-    : compactWhitespaces(value.replace("  ", " "));
+function maskBannedWord(source, bannedWord) {
+  const mask = "*".repeat(bannedWord.length);
+  return source.replace(bannedWord, mask);
 }
 
-function maskBannedWords(value, options) {
-  return options ? options.bannedWords.reduce(maskBannedWord, value) : value;
+function nomalizeWhiteSpaces(source) {
+  return source.replace("\t", " ");
 }
 
-function maskBannedWord(value, bannedWord) {
-  return value.replace(bannedWord, "*".repeat(bannedWord.length));
+function compactWhiteSpaces(source) {
+  return source.indexOf("  ") < 0 ? source : compactWhiteSpaces(source.replace("  ", " "));
 }
 
-function trimWhitespaces(value) {
-  return value.trim();
-}
-
-module.exports = refineText;
+module.exports=refineText;
