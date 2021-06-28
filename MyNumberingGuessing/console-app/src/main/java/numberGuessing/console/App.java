@@ -1,10 +1,11 @@
-package numberguessing.console;
+package numberGuessing.console;
+
+import numberGuessing.RandomGenerator;
 
 import java.util.Scanner;
 
-import numberguessing.RandomGenerator;
-
 public class App {
+
     public static void main(String[] args) {
         AppModel model = new AppModel(new RandomGenerator());
         Scanner scanner = new Scanner(System.in);
@@ -12,9 +13,9 @@ public class App {
         scanner.close();
     }
 
-    private static void runLoop(AppModel model, Scanner scanner) {
+    private static void runLoop(AppModel mode, Scanner scanner) {
         while (!model.isCompleted()) {
-            System.out.print(model.flushOutput());
+            System.out.println(model.flushOutput());
             model.processInput(scanner.nextLine());
         }
     }
