@@ -1,6 +1,15 @@
 function refineText(source, options) {
-  return [nomalizeWhiteSpaces, compactWhiteSpaces, maskBannedWords]
+  return [
+    nomalizeWhiteSpaces, 
+    compactWhiteSpaces, 
+    maskBannedWords,
+    trimWhitespaces
+  ]
     .reduce((value, filter) => filter(value, options), source);
+}
+
+function trimWhitespaces(value) {
+  return value.trim();
 }
 
 function maskBannedWords(source, options) {
