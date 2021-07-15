@@ -5,15 +5,18 @@ import java.util.List;
 
 public final class ProductInventorySpy implements ProductInventory {
 
-    private final List<Product> log = new ArrayList<Product>();
+    private ArrayList<Product> log;
+
+    public ProductInventorySpy() {
+        log = new ArrayList<Product>();
+    }
+
+    public ArrayList<Product> getLog() {
+        return log;
+    }
 
     @Override
     public void upsertProduct(Product product) {
         log.add(product);
     }
-
-    public List<Product> getLog() {
-        return log;
-    }
-
 }
