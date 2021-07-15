@@ -16,7 +16,6 @@ public final class ProductSynchronizer {
     }
 
     public void run() {
-
         StreamSupport.stream(importer.fetchProducts().spliterator(), false)
                 .filter(validator::isValid)
                 .forEach(inventory::upsertProduct);

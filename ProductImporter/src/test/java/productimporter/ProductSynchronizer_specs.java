@@ -12,6 +12,7 @@ import productimporter.suppliers.wayneenterprises.WayneEnterprisesProductImporte
 import productimporter.suppliers.wayneenterprises.WayneEnterprisesProductSourceStub;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -57,26 +58,27 @@ public class ProductSynchronizer_specs {
         assertThat(spy.getLog()).isEmpty();
     }
 
-//    @Test
-//    void sut_really_does_not_save_invalid_product() {
-//        // Arrange
-//        var pricing = new Pricing(BigDecimal.TEN, BigDecimal.ONE);
-//        var product = new Product("supplierName", "productCode", "productName", pricing);
-//
-//        ProductImporter importer = mock(ProductImporter.class);
-//        when(importer.fetchProducts()).thenReturn(Arrays.asList(product));
-//
-//        ProductValidator validator = mock(ProductValidator.class);
-//        when(validator.isValid(product)).thenReturn(false);
-//
-//        ProductInventory inventory = mock(ProductInventory.class);
-//
-//        var sut = new ProductSynchronizer(importer, validator, inventory);
-//
-//        // Act
-//        sut.run();
-//
-//        // Assert
-//        verify(inventory, never()).upsertProduct(product);
-//    }
+    @Test
+    @DisplayName("상품 필터링")
+    void sut_really_does_not_save_invalid_product() {
+
+        // given
+        Pricing pricing = new Pricing(BigDecimal.TEN, BigDecimal.ONE);
+        Product product = new Product("supplierNane",
+                "productCode", "productName", pricing);
+
+        ProductImporter importer = mock(ProductImporter.class);
+        when(importer.fetchProducts()).thenReturn(Arrays.asList(product));
+        ProductValidator validator = mock(ProductValidator.class);
+        when(validator.isValid(product)).thenReturn(false);
+        ProductInventory inventory = mock(ProductInventory.class);
+
+        var sut = new ProductSynchronizer(importer, validator, inventory);
+
+        // when
+        sut.run();
+
+        // then
+        verify(inventory, never()).upsertProduct(product);
+    }
 }
