@@ -1,10 +1,11 @@
 package productimporter.suppliers.wayneenterprises;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WayneEnterprisesProductSourceStub implements WayneEnterprisesProductSource {
 
-    private final WayneEnterprisesProduct[] products;
+    private WayneEnterprisesProduct[] products;
 
     public WayneEnterprisesProductSourceStub(WayneEnterprisesProduct... products) {
         this.products = products;
@@ -14,5 +15,4 @@ public class WayneEnterprisesProductSourceStub implements WayneEnterprisesProduc
     public Iterable<WayneEnterprisesProduct> fetchProducts() {
         return Arrays.asList(products);
     }
-
 }

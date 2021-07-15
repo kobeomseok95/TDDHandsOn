@@ -1,5 +1,7 @@
 package productimporter.suppliers.wayneenterprises;
 
+import productimporter.Product;
+
 public final class WayneEnterprisesProduct {
     private final String id;
     private final String title;

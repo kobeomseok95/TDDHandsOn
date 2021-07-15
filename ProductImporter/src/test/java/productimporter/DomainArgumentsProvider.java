@@ -28,7 +28,9 @@ public class DomainArgumentsProvider implements ArgumentsProvider, AnnotationCon
             arguments[i] = argument.orElse(null);
         }
 
-        return Arrays.stream(new Arguments[] { Arguments.of(arguments) });
+        return Arrays.stream(new Arguments[] {
+                Arguments.of(arguments)
+        });
     }
 
 }
