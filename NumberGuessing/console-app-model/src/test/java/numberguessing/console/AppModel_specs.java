@@ -230,113 +230,113 @@ public class AppModel_specs {
         assertThat(actual).endsWith("Enter " + player3 + "'s guess: ");
     }
 
-    // @ParameterizedTest
-    // @CsvSource({ "Foo, Bar, Baz", "Bar, Baz, Foo", "Baz, Foo, Bar" })
-    // void sut_correctly_rounds_players(String player1, String player2, String player3) {
-    //     var sut = new AppModel(new PositiveIntegerGeneratorStub(50));
-    //     sut.processInput("2");
-    //     sut.processInput(String.join(", ", player1, player2, player3));
-    //     sut.processInput("10");
-    //     sut.processInput("10");
-    //     sut.flushOutput();
-    //     sut.processInput("10");
+    @ParameterizedTest
+    @CsvSource({ "Foo, Bar, Baz", "Bar, Baz, Foo", "Baz, Foo, Bar" })
+    void sut_correctly_rounds_players(String player1, String player2, String player3) {
+        var sut = new AppModel(new PositiveIntegerGeneratorStub(50));
+        sut.processInput("2");
+        sut.processInput(String.join(", ", player1, player2, player3));
+        sut.processInput("10");
+        sut.processInput("10");
+        sut.flushOutput();
+        sut.processInput("10");
 
-    //     String actual = sut.flushOutput();
+        String actual = sut.flushOutput();
 
-    //     assertThat(actual).endsWith("Enter " + player1 + "'s guess: ");
-    // }
+        assertThat(actual).endsWith("Enter " + player1 + "'s guess: ");
+    }
 
-    // @ParameterizedTest
-    // @CsvSource({ "50, 40, 1, Foo", "30, 29, 2, Bar" })
-    // void sut_correctly_prints_too_low_message_in_multiplayer_game(int answer, int guess, int fails, String lastPlayer) {
-    //     var sut = new AppModel(new PositiveIntegerGeneratorStub(answer));
-    //     sut.processInput("2");
-    //     sut.processInput("Foo, Bar, Baz");
-    //     for (int i = 0; i < fails - 1; i++)
-    //         sut.processInput(Integer.toString(guess));
-    //     sut.flushOutput();
-    //     sut.processInput(Integer.toString(guess));
+    @ParameterizedTest
+    @CsvSource({ "50, 40, 1, Foo", "30, 29, 2, Bar" })
+    void sut_correctly_prints_too_low_message_in_multiplayer_game(int answer, int guess, int fails, String lastPlayer) {
+        var sut = new AppModel(new PositiveIntegerGeneratorStub(answer));
+        sut.processInput("2");
+        sut.processInput("Foo, Bar, Baz");
+        for (int i = 0; i < fails - 1; i++)
+            sut.processInput(Integer.toString(guess));
+        sut.flushOutput();
+        sut.processInput(Integer.toString(guess));
 
-    //     String actual = sut.flushOutput();
+        String actual = sut.flushOutput();
 
-    //     assertThat(actual).startsWith(lastPlayer + "'s guess is too low." + NEW_LINE);
-    // }
+        assertThat(actual).startsWith(lastPlayer + "'s guess is too low." + NEW_LINE);
+    }
 
-    // @ParameterizedTest
-    // @CsvSource({ "50, 60, 1, Foo", "9, 81, 2, Bar" })
-    // void sut_correctly_prints_too_high_message_in_multiplayer_game(int answer, int guess, int fails,
-    //         String lastPlayer) {
-    //     var sut = new AppModel(new PositiveIntegerGeneratorStub(answer));
-    //     sut.processInput("2");
-    //     sut.processInput("Foo, Bar, Baz");
-    //     for (int i = 0; i < fails - 1; i++)
-    //         sut.processInput(Integer.toString(guess));
-    //     sut.flushOutput();
-    //     sut.processInput(Integer.toString(guess));
+    @ParameterizedTest
+    @CsvSource({ "50, 60, 1, Foo", "9, 81, 2, Bar" })
+    void sut_correctly_prints_too_high_message_in_multiplayer_game(int answer, int guess, int fails,
+            String lastPlayer) {
+        var sut = new AppModel(new PositiveIntegerGeneratorStub(answer));
+        sut.processInput("2");
+        sut.processInput("Foo, Bar, Baz");
+        for (int i = 0; i < fails - 1; i++)
+            sut.processInput(Integer.toString(guess));
+        sut.flushOutput();
+        sut.processInput(Integer.toString(guess));
 
-    //     String actual = sut.flushOutput();
+        String actual = sut.flushOutput();
 
-    //     assertThat(actual).contains(lastPlayer + "'s guess is too high." + NEW_LINE);
-    // }
+        assertThat(actual).contains(lastPlayer + "'s guess is too high." + NEW_LINE);
+    }
 
-    // @ParameterizedTest
-    // @ValueSource(ints = { 1, 10, 100 })
-    // void sut_correctly_prints_correct_message_in_multiplayer_game(int answer) {
-    //     var sut = new AppModel(new PositiveIntegerGeneratorStub(answer));
-    //     sut.processInput("2");
-    //     sut.processInput("Foo, Bar, Baz");
-    //     sut.flushOutput();
-    //     int guess = answer;
-    //     sut.processInput(Integer.toString(guess));
+    @ParameterizedTest
+    @ValueSource(ints = { 1, 10, 100 })
+    void sut_correctly_prints_correct_message_in_multiplayer_game(int answer) {
+        var sut = new AppModel(new PositiveIntegerGeneratorStub(answer));
+        sut.processInput("2");
+        sut.processInput("Foo, Bar, Baz");
+        sut.flushOutput();
+        int guess = answer;
+        sut.processInput(Integer.toString(guess));
 
-    //     String actual = sut.flushOutput();
+        String actual = sut.flushOutput();
 
-    //     assertThat(actual).startsWith("Correct! ");
-    // }
+        assertThat(actual).startsWith("Correct! ");
+    }
 
-    // @ParameterizedTest
-    // @CsvSource({ "0, Foo", "1, Bar", "2, Baz", "99, Foo", "100, Bar" })
-    // void sut_correctly_prints_winner_if_multiplayer_game_finished(int fails, String winner) {
-    //     var sut = new AppModel(new PositiveIntegerGeneratorStub(50));
-    //     sut.processInput("2");
-    //     sut.processInput("Foo, Bar, Baz");
-    //     for (int i = 0; i < fails; i++)
-    //         sut.processInput("30");
-    //     sut.flushOutput();
-    //     sut.processInput("50");
+    @ParameterizedTest
+    @CsvSource({ "0, Foo", "1, Bar", "2, Baz", "99, Foo", "100, Bar" })
+    void sut_correctly_prints_winner_if_multiplayer_game_finished(int fails, String winner) {
+        var sut = new AppModel(new PositiveIntegerGeneratorStub(50));
+        sut.processInput("2");
+        sut.processInput("Foo, Bar, Baz");
+        for (int i = 0; i < fails; i++)
+            sut.processInput("30");
+        sut.flushOutput();
+        sut.processInput("50");
 
-    //     String actual = sut.flushOutput();
+        String actual = sut.flushOutput();
 
-    //     assertThat(actual).contains(winner + " wins." + NEW_LINE);
-    // }
+        assertThat(actual).contains(winner + " wins." + NEW_LINE);
+    }
 
-    // @Test
-    // void sut_prints_select_mode_message_if_multiplayer_game_finished() {
-    //     var sut = new AppModel(new PositiveIntegerGeneratorStub(50));
-    //     sut.processInput("2");
-    //     sut.processInput("Foo, Bar, Baz");
-    //     sut.flushOutput();
-    //     sut.processInput("50");
+    @Test
+    void sut_prints_select_mode_message_if_multiplayer_game_finished() {
+        var sut = new AppModel(new PositiveIntegerGeneratorStub(50));
+        sut.processInput("2");
+        sut.processInput("Foo, Bar, Baz");
+        sut.flushOutput();
+        sut.processInput("50");
 
-    //     String actual = sut.flushOutput();
+        String actual = sut.flushOutput();
 
-    //     assertThat(actual).endsWith("1: Single player game" + NEW_LINE + "2: Multiplayer game" + NEW_LINE + "3: Exit"
-    //             + NEW_LINE + "Enter selection: ");
-    // }
+        assertThat(actual).endsWith("1: Single player game" + NEW_LINE + "2: Multiplayer game" + NEW_LINE + "3: Exit"
+                + NEW_LINE + "Enter selection: ");
+    }
 
-    // @Test
-    // void sut_returns_to_mode_selection_if_multiplayer_game_finished() {
-    //     var sut = new AppModel(new PositiveIntegerGeneratorStub(50));
+    @Test
+    void sut_returns_to_mode_selection_if_multiplayer_game_finished() {
+        var sut = new AppModel(new PositiveIntegerGeneratorStub(50));
 
-    //     sut.processInput("2");
-    //     sut.processInput("Foo, Bar, Baz");
-    //     sut.processInput("20");
-    //     sut.processInput("50");
-    //     sut.processInput("3");
+        sut.processInput("2");
+        sut.processInput("Foo, Bar, Baz");
+        sut.processInput("20");
+        sut.processInput("50");
+        sut.processInput("3");
 
-    //     boolean actual = sut.isCompleted();
-    //     assertTrue(actual);
-    // }
+        boolean actual = sut.isCompleted();
+        assertTrue(actual);
+    }
 
     // @Disabled
     // @ParameterizedTest
